@@ -1,0 +1,7 @@
+POST http://localhost:8080/members
+Content-Type: application/json
+
+{
+  "name": "academy",
+  "pwd": "12345"
+}

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <title>Home</title>
+</head>
+<body>
+    Welcome, <span th:text="${loginName}" /><br />
+    ID: <span th:text="${session.loginId}" /><br />
+    <a href="/logout">Logout</a>
+</body>
+</html>

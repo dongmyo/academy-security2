@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <title>Login</title>
+</head>
+<body>
+    <form method="post" action="/login">
+        <span th:text="#{login.name}" />: <input type="text" name="name" /><br />
+        <span th:text="#{login.pwd}" />: <input type="password" name="pwd" /><br />
+        <input type="submit" />
+    </form>
+</body>
+</html>

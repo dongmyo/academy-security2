@@ -1,0 +1,28 @@
+!.mvn/wrapper/maven-wrapper.jar
+
+*.class
+*~
+
+# ignore eclipse or spring settings
+.project
+.classpath
+.settings/
+.springBeans
+
+# ignore intelij or webstorm settings
+*.iml
+.idea/
+deploy/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+hs_err_pid*
+/target/
+
+*.bak
+
+# ignore log
+log/
