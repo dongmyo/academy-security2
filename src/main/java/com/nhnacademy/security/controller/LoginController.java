@@ -24,13 +24,11 @@ public class LoginController {
         this.memberService = memberService;
     }
 
-    // TODO #6: 로그인 폼
     @GetMapping
     public String login() {
         return "login";
     }
 
-    // TODO #7: 실습 - 로그인 처리
     @PostMapping
     public ModelAndView processLogin(MemberLoginRequest loginRequest, HttpServletRequest request, HttpServletResponse response) throws LoginFailureException {
         MemberResponse memberResponse = memberService.processLogin(loginRequest);

@@ -1,15 +1,12 @@
 spring:
-  # TODO #2: resource bundle message source
   messages:
     basename: messages/login
     encoding: UTF-8
 
-  # TODO #3: thymeleaf view template engine
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
 
-  # TODO #4: datasource w/ hikari cp
   datasource:
     hikari:
       driver-class-name: org.h2.Driver
@@ -17,7 +14,6 @@ spring:
       username: sa
       password:
 
-  # TODO #5: JPA 설정
   jpa:
     show-sql: true
     open-in-view: false

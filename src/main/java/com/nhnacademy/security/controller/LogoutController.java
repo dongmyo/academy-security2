@@ -11,7 +11,6 @@ import java.util.stream.Stream;
 
 @Controller
 public class LogoutController {
-    // TODO #8: 실습 - 로그아웃 처리
     @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         Cookie cookie = Stream.of(request.getCookies())
