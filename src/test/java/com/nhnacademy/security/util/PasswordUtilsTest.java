@@ -11,7 +11,6 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-// TODO #2: hash 함수 test cases
 @Slf4j
 public class PasswordUtilsTest {
     private static final String PASSWORD = "12345";
