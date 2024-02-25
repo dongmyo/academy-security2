@@ -15,8 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@Controller
-@RequestMapping("/login")
+// TODO #3: /login 주석 처리
+//@Controller
+//@RequestMapping("/login")
 public class LoginController {
     private final MemberService memberService;
 

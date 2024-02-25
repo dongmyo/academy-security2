@@ -9,9 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-@Controller
+// TODO #4: /logout 주석 처리
+//@Controller
 public class LogoutController {
-    @GetMapping("/logout")
+//    @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         Cookie cookie = Stream.of(request.getCookies())
                               .filter(c -> "SESSION".equals(c.getName()))

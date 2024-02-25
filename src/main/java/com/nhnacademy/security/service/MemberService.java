@@ -25,7 +25,6 @@ public class MemberService {
 
     @Transactional
     public MemberResponse createMember(MemberCreateRequest request) {
-        // TODO #1: 비밀번호를 plain text 로 저장하지 말고 hash 값을 저장.
         byte[] salt = new byte[8];
 
         SecureRandom random = new SecureRandom();
@@ -40,7 +39,6 @@ public class MemberService {
     }
 
     public MemberResponse processLogin(MemberLoginRequest request) throws LoginFailureException {
-        // TODO #2: password 를 사용자 입력값과 직접 비교하면 안 됨.
         Member member = memberRepository.findByName(request.getName());
         if (Objects.isNull(member)) {
             throw new LoginFailureException(request.getName());
@@ -55,7 +53,6 @@ public class MemberService {
             throw new LoginFailureException(request.getName());
         }
 
-        // TODO #3: 사용자가 입력한 비밀번호의 hash 값과 데이터베이스에 저장된 hash 값을 비교.
         if (!comparePassword(request.getPwd(), member.getPassword())) {
             throw new LoginFailureException(request.getName());
         }
