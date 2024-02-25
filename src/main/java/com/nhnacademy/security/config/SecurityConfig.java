@@ -18,7 +18,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                     .requestMatchers("/admin/**").hasRole("ADMIN")
                     /* TODO #1: 실습 - 비공개 프로젝트 URL은 (`/private-project/**`) ADMIN 이나 MEMBER 권한이 있을 때 접근 가능하도록 설정해주세요. */
-                    /* ... */
+                    .requestMatchers("/private-project/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_MEMBER")
                     .requestMatchers("/public-project/**").authenticated()
                     .requestMatchers("/profile").authenticated()
                     .requestMatchers("/redirect-index").authenticated()
@@ -40,10 +40,14 @@ public class SecurityConfig {
         http.csrf().disable();
 
         /* TODO #2: 실습 - Security HTTP Response header 의 기본값을 해제하고 `X-Frame-Options` 헤더의 값을 SAMEORIGIN으로 설정해주세요. */
-        http.headers();
+        http.headers()
+            .defaultsDisabled()
+            .frameOptions()
+                .sameOrigin();
 
         /* TODO #7: 실습 - custom 403 에러 페이지(`/error/403`)를 설정해주세요. */
-        http.exceptionHandling();
+        http.exceptionHandling()
+                .accessDeniedPage("/error/403");
 
         return http.build();
     }

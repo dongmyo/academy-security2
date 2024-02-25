@@ -24,7 +24,15 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         /* TODO #3: 실습 - Custom UserDetailsService 를 구현해주세요. */
-        return null;
+        Member member = memberRepository.findByName(username);
+        if (Objects.isNull(member)) {
+            throw new UsernameNotFoundException(username + " not found");
+        }
+
+        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(member.getAuthority().getAuthority());
+        Collection<GrantedAuthority> grantedAuthorities = Collections.singletonList(grantedAuthority);
+
+        return new User(member.getName(), member.getPassword(), grantedAuthorities);
     }
 
 }
