@@ -3,18 +3,21 @@ package com.nhnacademy.security.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        // TODO #2: 실습 - 로그인한 사용자에게는 프로필 페이지(`/profile`) 가 보이도록 설정하세요.
         http
                 .authorizeHttpRequests()
                     .requestMatchers("/admin/**").hasRole("ADMIN")
                     .requestMatchers("/private-project/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_MEMBER")
                     .requestMatchers("/public-project/**").authenticated()
+                    .requestMatchers("/profile").authenticated()
                     .anyRequest().permitAll()
                     .and();
 
@@ -27,6 +30,28 @@ public class SecurityConfig {
         http.csrf().disable();
 
         return http.build();
+    }
+
+    // TODO #1: InMemoryUserDetailsManager
+    @Bean
+    public InMemoryUserDetailsManager userDetailsService() {
+        UserDetails admin = User.withDefaultPasswordEncoder()
+                                .username("admin")
+                                .password("admin")
+                                .roles("ADMIN")
+                                .build();
+
+        UserDetails member = User.withUsername("member")
+                                 .password("{noop}member")
+                                 .authorities("ROLE_MEMBER")
+                                 .build();
+
+        UserDetails guest = User.withUsername("guest")
+                                 .password("{noop}guest")
+                                 .authorities("ROLE_GUEST")
+                                 .build();
+
+        return new InMemoryUserDetailsManager(admin, member, guest);
     }
 
 }
