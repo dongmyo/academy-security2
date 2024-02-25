@@ -9,14 +9,14 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        // TODO #2: 웹 요청 ACL 스프링 표현식 적용
-//        http
-//                .authorizeHttpRequests()
-//                    .requestMatchers("/admin/**").hasRole("ADMIN")
-//                    .requestMatchers("/private-project/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_MEMBER")
-//                    .requestMatchers("/public-project/**").authenticated()
-//                    .anyRequest().permitAll()
-//                    .and();
+        // TODO #2: 실습 - 로그인한 사용자에게는 프로필 페이지(`/profile`) 가 보이도록 설정하세요.
+        http
+                .authorizeHttpRequests()
+                    .requestMatchers("/admin/**").hasRole("ADMIN")
+                    .requestMatchers("/private-project/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_MEMBER")
+                    .requestMatchers("/public-project/**").authenticated()
+                    .anyRequest().permitAll()
+                    .and();
 
         // login
         http.formLogin();
