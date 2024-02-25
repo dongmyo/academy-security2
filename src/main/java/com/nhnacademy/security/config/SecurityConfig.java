@@ -33,7 +33,9 @@ public class SecurityConfig {
 
         // TODO #7: 실습 - logout 커스터마이즈: 로그아웃했을 때 SESSION 이라는 이름의 쿠키를 지우고 세션을 invalidate 시켜주세요.
         http.logout()
-            .logoutUrl("/auth/logout");
+            .logoutUrl("/auth/logout")
+            .invalidateHttpSession(true)
+            .deleteCookies("SESSION");
 
         // TODO #1: CSRF 끄기.
         http.csrf().disable();
