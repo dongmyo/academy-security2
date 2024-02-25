@@ -2,29 +2,31 @@ package com.nhnacademy.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
-// TODO #1: security config
 @Configuration
 public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests()
-                    .anyRequest().authenticated()
-                    .and();
+        // TODO #2: 웹 요청 ACL 스프링 표현식 적용
+//        http
+//                .authorizeHttpRequests()
+//                    .requestMatchers("/admin/**").hasRole("ADMIN")
+//                    .requestMatchers("/private-project/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_MEMBER")
+//                    .requestMatchers("/public-project/**").authenticated()
+//                    .anyRequest().permitAll()
+//                    .and();
 
+        // login
         http.formLogin();
+        // logout
+        http.logout();
 
-        return http
-                .httpBasic(Customizer.withDefaults())
-                .headers(h -> {
-                    h.cacheControl().disable();
-                    h.contentTypeOptions().disable();
-                })
-                .build();
+        // disable csrf
+        http.csrf().disable();
+
+        return http.build();
     }
 
 }
