@@ -20,6 +20,8 @@ public class SecurityConfig {
                     .requestMatchers("/private-project/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_MEMBER")
                     .requestMatchers("/public-project/**").authenticated()
                     .requestMatchers("/profile").authenticated()
+                    // TODO #6: `/redirect-index` 접근 시 로그인을 하고 `/`로 가도록 설정.
+                    .requestMatchers("/redirect-index").authenticated()
                     .anyRequest().permitAll()
                     .and();
 
@@ -28,16 +30,13 @@ public class SecurityConfig {
                 .usernameParameter("id")
                 .passwordParameter("pwd")
                 .loginProcessingUrl("/login")
-                // TODO #2: login success handler 설정.
                 .successHandler(new CustomLoginSuccessHandler());
 
-        // TODO #7: 실습 - logout 커스터마이즈: 로그아웃했을 때 SESSION 이라는 이름의 쿠키를 지우고 세션을 invalidate 시켜주세요.
         http.logout()
             .logoutUrl("/auth/logout")
             .invalidateHttpSession(true)
             .deleteCookies("SESSION");
 
-        // TODO #1: CSRF 끄기.
         http.csrf().disable();
 
         return http.build();

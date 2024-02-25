@@ -1,15 +1,28 @@
 <!DOCTYPE html>
-<html lang="ko">
+<!-- TODO #2: spring security를 위한 namespace 선언 -->
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" />
     <title>Home</title>
 </head>
 <body>
-    <a href="/admin/manage">Admin Tool</a><br />
-    <a href="/private-project/1">Private Project</a><br />
-    <a href="/public-project/2">Public Project</a><br />
-    <a href="/profile">Profile</a><br />
-    <a href="/auth/login">Login</a><br />
-    <a href="/auth/logout">Logout</a><br />
+    <h1>Home</h1>
+
+    <th:block th:include="fragments/heading" />
+
+    <!-- TODO #3: `sec:authorize`, `sec:authorize-url` -->
+    <ul>
+        <li sec:authorize="hasAuthority('ROLE_ADMIN')">
+            <a href="/admin/manage">Admin Tool</a>
+        </li>
+        <li sec:authorize="hasAnyAuthority('ROLE_ADMIN', 'ROLE_MEMBER')">
+            <a href="/private-project/1">Private Project</a>
+        </li>
+        <li sec:authorize-url="/project/2">
+            <a href="/public-project/2">Public Project</a>
+        </li>
+    </ul>
 </body>
 </html>

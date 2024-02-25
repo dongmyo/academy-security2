@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!-- TODO #4: `sec:authentication` -->
+<div sec:authorize="isAuthenticated()">
+    <a href="/profile"><span sec:authentication="name" /></a>,&nbsp;
+    <a href="/auth/logout">Logout</a>
+</div>
+<div sec:authorize="!isAuthenticated()">
+    <a href="/redirect-index">Login</a>
+</div>
+<br />
+<a href="/">Go to Main</a>
+<br />
+<br />
+<br />
+
+</html>
