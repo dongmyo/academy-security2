@@ -1,5 +1,6 @@
 package com.nhnacademy.security.config;
 
+import com.nhnacademy.security.auth.CustomLoginSuccessHandler;
 import com.nhnacademy.security.repository.MemberRepository;
 import com.nhnacademy.security.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
@@ -22,18 +23,19 @@ public class SecurityConfig {
                     .anyRequest().permitAll()
                     .and();
 
-        // TODO #3: 로그인 페이지 커스터마이징.
         http.formLogin()
             .loginPage("/auth/login")
                 .usernameParameter("id")
                 .passwordParameter("pwd")
-                .loginProcessingUrl("/login");
+                .loginProcessingUrl("/login")
+                // TODO #2: login success handler 설정.
+                .successHandler(new CustomLoginSuccessHandler());
 
-        // TODO #4: 로그아웃 페이지 커스터마이징.
+        // TODO #7: 실습 - logout 커스터마이즈: 로그아웃했을 때 SESSION 이라는 이름의 쿠키를 지우고 세션을 invalidate 시켜주세요.
         http.logout()
             .logoutUrl("/auth/logout");
 
-        // TODO #2: member 생성 후, CSRF 설정 ON.
+        // TODO #1: CSRF 끄기.
         http.csrf().disable();
 
         return http.build();

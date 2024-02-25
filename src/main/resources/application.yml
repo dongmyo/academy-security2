@@ -25,7 +25,6 @@ spring:
         globally_quoted_identifiers: true
 
     hibernate:
-      ### TODO #1: 멤버 생성 후 none 으로 변경
-      ddl-auto: create
+      ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
