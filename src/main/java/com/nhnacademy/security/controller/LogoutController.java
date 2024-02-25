@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-// TODO #4: /logout 주석 처리
 //@Controller
 public class LogoutController {
 //    @GetMapping("/logout")

@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-// TODO #3: /login 주석 처리
 //@Controller
 //@RequestMapping("/login")
 public class LoginController {
