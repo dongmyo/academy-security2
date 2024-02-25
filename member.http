@@ -2,6 +2,29 @@ POST http://localhost:8080/members
 Content-Type: application/json
 
 {
-  "name": "academy",
-  "pwd": "12345"
+  "name": "admin",
+  "pwd": "admin",
+  "authority": "ROLE_ADMIN"
+}
+
+###
+
+POST http://localhost:8080/members
+Content-Type: application/json
+
+{
+  "name": "member",
+  "pwd": "member",
+  "authority": "ROLE_MEMBER"
+}
+
+###
+
+POST http://localhost:8080/members
+Content-Type: application/json
+
+{
+  "name": "guest",
+  "pwd": "guest",
+  "authority": "ROLE_GUEST"
 }

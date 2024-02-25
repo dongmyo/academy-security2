@@ -33,11 +33,11 @@ public class Member {
         // nothing
     }
 
-    public static Member forCreate(String name, String password) {
+    public static Member forCreate(String name, String password, String authority) {
         Member member = new Member();
         member.name = name;
         member.password = password;
-        member.authority = Authority.forCreate("member", member);
+        member.authority = Authority.forCreate(authority, member);
 
         return member;
     }

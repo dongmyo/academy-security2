@@ -1,11 +1,12 @@
 package com.nhnacademy.security.config;
 
+import com.nhnacademy.security.repository.MemberRepository;
+import com.nhnacademy.security.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -32,26 +33,16 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // TODO #1: InMemoryUserDetailsManager
+    // TODO #1: UserDetailService 빈 등록.
     @Bean
-    public InMemoryUserDetailsManager userDetailsService() {
-        UserDetails admin = User.withDefaultPasswordEncoder()
-                                .username("admin")
-                                .password("admin")
-                                .roles("ADMIN")
-                                .build();
+    public CustomUserDetailsService userDetailsService(MemberRepository memberRepository) {
+        return new CustomUserDetailsService(memberRepository);
+    }
 
-        UserDetails member = User.withUsername("member")
-                                 .password("{noop}member")
-                                 .authorities("ROLE_MEMBER")
-                                 .build();
-
-        UserDetails guest = User.withUsername("guest")
-                                 .password("{noop}guest")
-                                 .authorities("ROLE_GUEST")
-                                 .build();
-
-        return new InMemoryUserDetailsManager(admin, member, guest);
+    // TODO #2: PasswordEncoder 빈 등록.
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }

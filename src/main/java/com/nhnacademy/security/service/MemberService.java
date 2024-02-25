@@ -8,6 +8,7 @@ import com.nhnacademy.security.model.MemberLoginRequest;
 import com.nhnacademy.security.model.MemberResponse;
 import com.nhnacademy.security.repository.MemberRepository;
 import com.nhnacademy.security.util.PasswordUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,21 +19,21 @@ import java.util.Optional;
 @Service
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public MemberService(MemberRepository memberRepository) {
+
+    public MemberService(MemberRepository memberRepository,
+                         PasswordEncoder passwordEncoder) {
         this.memberRepository = memberRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
     public MemberResponse createMember(MemberCreateRequest request) {
-        byte[] salt = new byte[8];
+        // TODO #3: PasswordEncoder 를 통해 비밀번호 hash 값 생성해서 데이터베이스에 저장.
+        String hash = passwordEncoder.encode(request.getPwd());
 
-        SecureRandom random = new SecureRandom();
-        random.nextBytes(salt);
-
-        String hash = encodePassword(request.getPwd(), salt);
-
-        Member member = Member.forCreate(request.getName(), hash);
+        Member member = Member.forCreate(request.getName(), hash, request.getAuthority());
         memberRepository.saveAndFlush(member);
 
         return new MemberResponse(member.getId(), member.getName());
