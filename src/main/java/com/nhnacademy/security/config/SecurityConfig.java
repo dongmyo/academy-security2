@@ -17,10 +17,10 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests()
                     .requestMatchers("/admin/**").hasRole("ADMIN")
-                    .requestMatchers("/private-project/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_MEMBER")
+                    /* TODO #1: 실습 - 비공개 프로젝트 URL은 (`/private-project/**`) ADMIN 이나 MEMBER 권한이 있을 때 접근 가능하도록 설정해주세요. */
+                    /* ... */
                     .requestMatchers("/public-project/**").authenticated()
                     .requestMatchers("/profile").authenticated()
-                    // TODO #6: `/redirect-index` 접근 시 로그인을 하고 `/`로 가도록 설정.
                     .requestMatchers("/redirect-index").authenticated()
                     .anyRequest().permitAll()
                     .and();
@@ -38,6 +38,12 @@ public class SecurityConfig {
             .deleteCookies("SESSION");
 
         http.csrf().disable();
+
+        /* TODO #2: 실습 - Security HTTP Response header 의 기본값을 해제하고 `X-Frame-Options` 헤더의 값을 SAMEORIGIN으로 설정해주세요. */
+        http.headers();
+
+        /* TODO #7: 실습 - custom 403 에러 페이지(`/error/403`)를 설정해주세요. */
+        http.exceptionHandling();
 
         return http.build();
     }
