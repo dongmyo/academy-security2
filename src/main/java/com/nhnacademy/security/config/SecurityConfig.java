@@ -22,24 +22,28 @@ public class SecurityConfig {
                     .anyRequest().permitAll()
                     .and();
 
-        // login
-        http.formLogin();
-        // logout
-        http.logout();
+        // TODO #3: 로그인 페이지 커스터마이징.
+        http.formLogin()
+            .loginPage("/auth/login")
+                .usernameParameter("id")
+                .passwordParameter("pwd")
+                .loginProcessingUrl("/login");
 
-        // disable csrf
+        // TODO #4: 로그아웃 페이지 커스터마이징.
+        http.logout()
+            .logoutUrl("/auth/logout");
+
+        // TODO #2: member 생성 후, CSRF 설정 ON.
         http.csrf().disable();
 
         return http.build();
     }
 
-    // TODO #1: UserDetailService 빈 등록.
     @Bean
     public CustomUserDetailsService userDetailsService(MemberRepository memberRepository) {
         return new CustomUserDetailsService(memberRepository);
     }
 
-    // TODO #2: PasswordEncoder 빈 등록.
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

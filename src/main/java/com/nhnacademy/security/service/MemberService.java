@@ -30,47 +30,12 @@ public class MemberService {
 
     @Transactional
     public MemberResponse createMember(MemberCreateRequest request) {
-        // TODO #3: PasswordEncoder 를 통해 비밀번호 hash 값 생성해서 데이터베이스에 저장.
         String hash = passwordEncoder.encode(request.getPwd());
 
         Member member = Member.forCreate(request.getName(), hash, request.getAuthority());
         memberRepository.saveAndFlush(member);
 
         return new MemberResponse(member.getId(), member.getName());
-    }
-
-    public MemberResponse processLogin(MemberLoginRequest request) throws LoginFailureException {
-        Member member = memberRepository.findByName(request.getName());
-        if (Objects.isNull(member)) {
-            throw new LoginFailureException(request.getName());
-        }
-
-        // 권한 체크
-        String authority = Optional.ofNullable(member.getAuthority())
-                                   .map(Authority::getAuthority)
-                                   .orElse(null);
-
-        if (Objects.isNull(authority) || !"member".equals(authority)) {
-            throw new LoginFailureException(request.getName());
-        }
-
-        if (!comparePassword(request.getPwd(), member.getPassword())) {
-            throw new LoginFailureException(request.getName());
-        }
-
-        return new MemberResponse(member.getId(), member.getName());
-    }
-
-    private boolean comparePassword(String rawPassword, String encodedPassword) {
-        byte[] salt = PasswordUtils.hexToBytes(encodedPassword.substring(0, 16));
-
-        String hash = encodePassword(rawPassword, salt);
-
-        return hash.equals(encodedPassword);
-    }
-
-    private String encodePassword(String rawPassword, byte[] salt) {
-        return PasswordUtils.bytesToHex(salt) + PasswordUtils.encode(rawPassword, salt);
     }
 
 }

@@ -13,7 +13,10 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("/private-project/**").setViewName("private-project");
         registry.addViewController("/public-project/**").setViewName("public-project");
         registry.addViewController("/profile").setViewName("profile");
-
+        // TODO #5: 로그인 페이지 view controller 설정.
+        registry.addViewController("/auth/login").setViewName("login");
+        // TODO #6: 로그아웃 페이지 view controller 설정.
+        registry.addViewController("/auth/logout").setViewName("logout");
     }
 
 }
