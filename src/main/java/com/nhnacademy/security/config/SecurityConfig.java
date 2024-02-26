@@ -24,12 +24,17 @@ public class SecurityConfig {
 
         http.formLogin()
             /* TODO #6: 실습 - 로그인 페이지 커스터마이징 */
-            /* ... */
+            .loginPage("/login")
+            .loginProcessingUrl("/login")
+            .usernameParameter("username")
+            .passwordParameter("password")
             .successHandler(new CustomLoginSuccessHandler());
 
         http.logout()
             /* TODO #8: 실습 - 로그아웃 페이지 커스터마이징 */
-            /* ... */
+            .logoutUrl("/logout")
+            .deleteCookies("LOGIN")
+            .invalidateHttpSession(true)
             .and();
 
         http.csrf().disable();
@@ -41,7 +46,10 @@ public class SecurityConfig {
     }
 
     /* TODO #9: 실습 - CustomUserDetailsService 를 반환하는 Bean 을 등록하세요 */
-    /* ... */
+    @Bean
+    public CustomUserDetailsService userDetailsService(MemberRepository memberRepository) {
+        return new CustomUserDetailsService(memberRepository);
+    }
 
     // TODO #10: PasswordEncoder - NoOpPasswordEncoder.
     @SuppressWarnings("deprecation")
