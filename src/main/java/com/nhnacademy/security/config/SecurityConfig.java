@@ -5,10 +5,12 @@ import com.nhnacademy.security.repository.MemberRepository;
 import com.nhnacademy.security.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 public class SecurityConfig {
@@ -24,6 +26,7 @@ public class SecurityConfig {
 
         http.formLogin()
             // TODO #3: 실습 - login success handler를 설정하세요.
+            .successHandler(loginSuccessHandler(null))
             .and();
 
         // TODO #5: LogoutFilter를 이용하지 않고 직접 controller로 로그아웃을 구현합니다.
@@ -46,6 +49,11 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler loginSuccessHandler(RedisTemplate<String, Object> sessionRedisTemplate) {
+        return new CustomLoginSuccessHandler(sessionRedisTemplate);
     }
 
 }
