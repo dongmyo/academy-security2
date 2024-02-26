@@ -63,13 +63,13 @@ public class SecurityConfig {
     }
 
     @Bean
-    public CustomLoginSuccessHandler loginSuccessHandler(RedisTemplate<Object, Object> redisTemplate) {
-        return new CustomLoginSuccessHandler(redisTemplate);
+    public CustomLoginSuccessHandler loginSuccessHandler(RedisTemplate<String, Object> sessionRedisTemplate) {
+        return new CustomLoginSuccessHandler(sessionRedisTemplate);
     }
 
     @Bean
-    public CustomLogoutSuccessHandler logoutSuccessHandler(RedisTemplate<Object, Object> redisTemplate) {
-        return new CustomLogoutSuccessHandler(redisTemplate);
+    public CustomLogoutSuccessHandler logoutSuccessHandler(RedisTemplate<String, Object> sessionRedisTemplate) {
+        return new CustomLogoutSuccessHandler(sessionRedisTemplate);
     }
 
 }

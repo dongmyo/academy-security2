@@ -17,11 +17,11 @@ import java.util.UUID;
 
 // TODO #2: 실습 - redis template 을 sessionRedisTemplate 을 사용하도록 변경하시오.
 public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
-    private final RedisTemplate<Object, Object> redisTemplate;
+    private final RedisTemplate<String, Object> sessionRedisTemplate;
 
 
-    public CustomLoginSuccessHandler(RedisTemplate<Object, Object> redisTemplate) {
-        this.redisTemplate = redisTemplate;
+    public CustomLoginSuccessHandler(RedisTemplate<String, Object> sessionRedisTemplate) {
+        this.sessionRedisTemplate = sessionRedisTemplate;
     }
 
     @Override
@@ -32,8 +32,8 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         List<GrantedAuthority> authorities = new ArrayList<>(userDetails.getAuthorities());
 
-        redisTemplate.opsForHash().put(sessionId, "username", userDetails.getUsername());
-        redisTemplate.opsForHash().put(sessionId, "authority", authorities.get(0).getAuthority());
+        sessionRedisTemplate.opsForHash().put(sessionId, "username", userDetails.getUsername());
+        sessionRedisTemplate.opsForHash().put(sessionId, "authority", authorities.get(0).getAuthority());
 
         Cookie cookie = new Cookie("SESSION", sessionId);
         cookie.setMaxAge(259200);     // 3일

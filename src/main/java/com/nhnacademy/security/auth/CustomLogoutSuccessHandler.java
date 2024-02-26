@@ -15,12 +15,12 @@ import java.util.Objects;
 
 // TODO #3: 실습 - redis template 을 sessionRedisTemplate 을 사용하도록 변경하시오.
 public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
-    private final RedisTemplate<Object, Object> redisTemplate;
+    private final RedisTemplate<String, Object> sessionRedisTemplate;
 
     private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
-    public CustomLogoutSuccessHandler(RedisTemplate<Object, Object> redisTemplate) {
-        this.redisTemplate = redisTemplate;
+    public CustomLogoutSuccessHandler(RedisTemplate<String, Object> sessionRedisTemplate) {
+        this.sessionRedisTemplate = sessionRedisTemplate;
     }
 
 
@@ -29,7 +29,7 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
             throws IOException, ServletException {
         String sessionId = CookieUtils.getCookieValue(request, "SESSION");
         if (Objects.nonNull(sessionId)) {
-            redisTemplate.opsForHash().delete(sessionId, "username", "authority");
+            sessionRedisTemplate.opsForHash().delete(sessionId, "username", "authority");
         }
 
         redirectStrategy.sendRedirect(request, response, "/");
