@@ -23,19 +23,11 @@ public class SecurityConfig {
                     .and();
 
         http.formLogin()
-            /* TODO #6: 실습 - 로그인 페이지 커스터마이징 */
-            .loginPage("/login")
-            .loginProcessingUrl("/login")
-            .usernameParameter("username")
-            .passwordParameter("password")
-            .successHandler(new CustomLoginSuccessHandler());
-
-        http.logout()
-            /* TODO #8: 실습 - 로그아웃 페이지 커스터마이징 */
-            .logoutUrl("/logout")
-            .deleteCookies("LOGIN")
-            .invalidateHttpSession(true)
+            // TODO #3: 실습 - login success handler를 설정하세요.
             .and();
+
+        // TODO #5: LogoutFilter를 이용하지 않고 직접 controller로 로그아웃을 구현합니다.
+        http.logout().disable();
 
         http.csrf().disable();
 
@@ -45,13 +37,11 @@ public class SecurityConfig {
         return http.build();
     }
 
-    /* TODO #9: 실습 - CustomUserDetailsService 를 반환하는 Bean 을 등록하세요 */
     @Bean
     public CustomUserDetailsService userDetailsService(MemberRepository memberRepository) {
         return new CustomUserDetailsService(memberRepository);
     }
 
-    // TODO #10: PasswordEncoder - NoOpPasswordEncoder.
     @SuppressWarnings("deprecation")
     @Bean
     public PasswordEncoder passwordEncoder() {

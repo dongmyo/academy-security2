@@ -10,7 +10,6 @@ spring:
   datasource:
     hikari:
       driver-class-name: org.h2.Driver
-      ## TODO #1: 새로운 DB 파일 경로, schema file 적용.
       jdbc-url: jdbc:h2:~/security2;DATABASE_TO_UPPER=false;MODE=LEGACY;INIT=RUNSCRIPT FROM 'classpath:/script/schema.sql'
       username: sa
       password:
@@ -29,3 +28,8 @@ spring:
       ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+  ### TODO #1: redis connection 설정.
+  redis:
+    host: 127.0.0.1
+    port: 6379

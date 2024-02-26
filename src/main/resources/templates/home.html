@@ -9,17 +9,12 @@
 <body>
     <h1>Home</h1>
 
-    <th:block th:include="fragments/heading" />
+    <!-- TODO #8: 로그인한 사용자의 username과 authority를 화면에 출력합니다 -->
+    username: <span th:text="${username}" /> <br />
+    authority: <span th:text="${authority}" /> <br />
+    <br />
 
-    <!-- TODO #3: 권한에 맞는 링크 노출 -->
-    <ul>
-        <li sec:authorize="hasAuthority('ROLE_TEACHER')">
-            <a href="/teacher/1">for Teachers</a>
-        </li>
-        <li sec:authorize="hasAuthority('ROLE_STUDENT')">
-            <a href="/student/2">for Students</a>
-        </li>
-    </ul>
+    <a href="/logout">logout</a>
 
 </body>
 </html>

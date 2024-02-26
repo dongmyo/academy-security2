@@ -1,4 +1,3 @@
--- TODO #2: DDL 및 기반 데이터 제공
 CREATE TABLE IF NOT EXISTS `Members` (
     `member_id`   BIGINT  NOT NULL auto_increment,
     `name`        VARCHAR(50)  NOT NULL,
