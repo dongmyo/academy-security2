@@ -1,11 +1,21 @@
 package com.nhnacademy.security.config;
 
+import com.nhnacademy.security.interceptor.SessionInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+    private final RedisTemplate<Object, Object> redisTemplate;
+
+    public WebConfig(RedisTemplate<Object, Object> redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
+
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("home");
@@ -16,8 +26,13 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("/auth/login").setViewName("login");
         registry.addViewController("/auth/logout").setViewName("logout");
         registry.addRedirectViewController("/redirect-index", "/");
-        /* TODO #5: `/error/403` 요청 시 `error403.html` view template 페이지가 응답하도록 설정. */
         registry.addViewController("/error/403").setViewName("error403");
+    }
+
+    // TODO #10: interceptor 설정
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new SessionInterceptor(redisTemplate));
     }
 
 }
