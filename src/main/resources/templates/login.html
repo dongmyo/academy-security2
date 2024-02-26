@@ -5,9 +5,10 @@
     <title>Login</title>
 </head>
 <body>
+    <!-- TODO #5: 로그인 action URL 및 파라미터 이름 확인 -->
     <form method="post" action="/login">
-        <span th:text="#{login.name}" />: <input type="text" name="id" /><br />
-        <span th:text="#{login.pwd}" />: <input type="password" name="pwd" /><br />
+        Username: <input type="text" name="username" /><br />
+        Password: <input type="password" name="password" /><br />
         <input type="submit" />
     </form>
 </body>

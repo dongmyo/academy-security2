@@ -9,15 +9,15 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("home");
-        registry.addViewController("/admin/**").setViewName("admin");
-        registry.addViewController("/private-project/**").setViewName("private-project");
-        registry.addViewController("/public-project/**").setViewName("public-project");
-        registry.addViewController("/profile").setViewName("profile");
-        registry.addViewController("/auth/login").setViewName("login");
-        registry.addViewController("/auth/logout").setViewName("logout");
-        registry.addRedirectViewController("/redirect-index", "/");
-        /* TODO #5: `/error/403` 요청 시 `error403.html` view template 페이지가 응답하도록 설정. */
+        registry.addViewController("/student/**").setViewName("student");
+        registry.addViewController("/teacher/**").setViewName("teacher");
         registry.addViewController("/error/403").setViewName("error403");
+
+        /* TODO #4: URL 확인 */
+        registry.addViewController("/login").setViewName("login");
+        registry.addViewController("/logout").setViewName("logout");
+
+        registry.addRedirectViewController("/redirect-index", "/");
     }
 
 }
