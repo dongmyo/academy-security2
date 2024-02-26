@@ -8,6 +8,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.InMemoryOAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -17,7 +23,6 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests()
                     .requestMatchers("/admin/**").hasRole("ADMIN")
-                    /* TODO #1: 실습 - 비공개 프로젝트 URL은 (`/private-project/**`) ADMIN 이나 MEMBER 권한이 있을 때 접근 가능하도록 설정해주세요. */
                     .requestMatchers("/private-project/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_MEMBER")
                     .requestMatchers("/public-project/**").authenticated()
                     .requestMatchers("/profile").authenticated()
@@ -25,12 +30,18 @@ public class SecurityConfig {
                     .anyRequest().permitAll()
                     .and();
 
-        http.formLogin()
-            .loginPage("/auth/login")
-                .usernameParameter("id")
-                .passwordParameter("pwd")
-                .loginProcessingUrl("/login")
-                .successHandler(new CustomLoginSuccessHandler());
+        // TODO : #4 oauth2Login()
+        http.oauth2Login()
+            .clientRegistrationRepository(clientRegistrationRepository())
+            .authorizedClientService(authorizedClientService())
+            .and();
+
+//        http.formLogin()
+//            .loginPage("/auth/login")
+//                .usernameParameter("id")
+//                .passwordParameter("pwd")
+//                .loginProcessingUrl("/login")
+//                .successHandler(new CustomLoginSuccessHandler());
 
         http.logout()
             .logoutUrl("/auth/logout")
@@ -39,13 +50,11 @@ public class SecurityConfig {
 
         http.csrf().disable();
 
-        /* TODO #2: 실습 - Security HTTP Response header 의 기본값을 해제하고 `X-Frame-Options` 헤더의 값을 SAMEORIGIN으로 설정해주세요. */
         http.headers()
             .defaultsDisabled()
             .frameOptions()
                 .sameOrigin();
 
-        /* TODO #7: 실습 - custom 403 에러 페이지(`/error/403`)를 설정해주세요. */
         http.exceptionHandling()
                 .accessDeniedPage("/error/403");
 
@@ -60,6 +69,28 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    // TODO : #2 ClientRegistrationRepository with ClientRegistration.
+    @Bean
+    public ClientRegistrationRepository clientRegistrationRepository() {
+        return new InMemoryClientRegistrationRepository(ClientRegistration.withRegistrationId("naver")
+                                                                          .clientId("i1uKug9bdiBnP3FLed03")
+                                                                          .clientSecret("4RkRczMtEY")
+                                                                          .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+                                                                          .scope("name", "email", "profile_image")
+                                                                          .redirectUri("{baseUrl}/{action}/oauth2/code/{registrationId}")
+                                                                          .authorizationUri("https://nid.naver.com/oauth2.0/authorize")
+                                                                          .tokenUri("https://nid.naver.com/oauth2.0/token")
+                                                                          .userInfoUri("https://openapi.naver.com/v1/nid/me")
+                                                                          .userNameAttributeName("response")
+                                                                          .build());
+    }
+
+    // TODO : #3 OAuth2AuthorizedClientService
+    @Bean
+    public OAuth2AuthorizedClientService authorizedClientService() {
+        return new InMemoryOAuth2AuthorizedClientService(clientRegistrationRepository());
     }
 
 }

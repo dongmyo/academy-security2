@@ -2,8 +2,8 @@
 <html lang="ko" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <div sec:authorize="isAuthenticated()">
-    <!-- TODO #4: 실습 - spring security taglib를 이용해서 authentication 객체의 principal.username을 출력하세요. -->
-    <a href="/profile"><span sec:authentication="principal.username" /></a>,&nbsp;
+    <!-- TODO #5: authentication 객체가 바뀜에 따라 수정 -->
+    <a href="/profile"><span sec:authentication="name" /></a>,&nbsp;
     <a href="/auth/logout">Logout</a>
 </div>
 <div sec:authorize="!isAuthenticated()">
