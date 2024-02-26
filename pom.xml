@@ -61,7 +61,6 @@
 			<version>5.0.0</version>
 		</dependency>
 
-		<!-- TODO : #1 spring-security-oauth2 -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-oauth2-client</artifactId>
