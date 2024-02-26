@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
-// TODO #3: 실습 - redis template 을 sessionRedisTemplate 을 사용하도록 변경하시오.
 public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
     private final RedisTemplate<String, Object> sessionRedisTemplate;
 
