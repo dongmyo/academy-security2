@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-// TODO #2: 실습 - redis template 을 sessionRedisTemplate 을 사용하도록 변경하시오.
 public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
     private final RedisTemplate<String, Object> sessionRedisTemplate;
 

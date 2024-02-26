@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Objects;
 
-// TODO #4: 실습 - redis template 을 sessionRedisTemplate 을 사용하도록 변경하시오.
 public class SessionInterceptor implements HandlerInterceptor {
     private final RedisTemplate<String, Object> sessionRedisTemplate;
 

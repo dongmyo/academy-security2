@@ -7,7 +7,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-// TODO #1: redis template bean 설정을 위한 configuration.
 @Configuration
 public class RedisConfig {
     @Bean
