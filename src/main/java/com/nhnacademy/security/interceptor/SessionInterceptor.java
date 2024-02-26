@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Objects;
 
-// TODO #9: 로그인된 사용자 정보를 redis 에서 읽어와서 request 속성 값으로 설정하는 interceptor 구현
+// TODO #4: 실습 - redis template 을 sessionRedisTemplate 을 사용하도록 변경하시오.
 public class SessionInterceptor implements HandlerInterceptor {
     private final RedisTemplate<Object, Object> redisTemplate;
 

@@ -11,7 +11,6 @@
 
     <th:block th:include="fragments/heading" />
 
-    <!-- TODO #12: sec:authorize, sec:authorization 대신 request.attribute 이용하도록 수정 -->
     <ul>
         <li th:if="${ #strings.equals(authority, 'ROLE_ADMIN')}">
             <a href="/admin/manage">Admin Tool</a>

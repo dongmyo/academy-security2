@@ -31,14 +31,12 @@ public class SecurityConfig {
                 .usernameParameter("id")
                 .passwordParameter("pwd")
                 .loginProcessingUrl("/login")
-                // TODO #4: login success handler 설정
                 .successHandler(loginSuccessHandler(null));
 
         http.logout()
             .logoutUrl("/auth/logout")
             .invalidateHttpSession(true)
             .deleteCookies("SESSION")
-            // TODO #7: logout success handler 설정
             .logoutSuccessHandler(logoutSuccessHandler(null));
 
         http.csrf().disable();
@@ -64,13 +62,11 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // TODO #3: login success handler bean
     @Bean
     public CustomLoginSuccessHandler loginSuccessHandler(RedisTemplate<Object, Object> redisTemplate) {
         return new CustomLoginSuccessHandler(redisTemplate);
     }
 
-    // TODO #6: logout success handler bean
     @Bean
     public CustomLogoutSuccessHandler logoutSuccessHandler(RedisTemplate<Object, Object> redisTemplate) {
         return new CustomLogoutSuccessHandler(redisTemplate);

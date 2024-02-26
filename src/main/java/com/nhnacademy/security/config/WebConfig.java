@@ -29,7 +29,6 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("/error/403").setViewName("error403");
     }
 
-    // TODO #10: interceptor 설정
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new SessionInterceptor(redisTemplate));

@@ -29,7 +29,6 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
-  ### TODO #2: redis 설정.
   redis:
     host: 127.0.0.1
     port: 6379
